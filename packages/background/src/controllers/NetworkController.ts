@@ -53,6 +53,9 @@ export interface NetworkControllerState {
 }
 
 import { RPChProvider } from '../../../../../RPCh/packages/ethers';
+import * as fixtures from '../../../../../RPCh/packages/common/build/fixtures';
+
+const sdkVal = fixtures.createAsyncKeyValStore();
 
 export default class NetworkController extends BaseController<NetworkControllerState> {
     public static readonly CURRENT_HARDFORK: string = 'london';
@@ -488,18 +491,25 @@ export default class NetworkController extends BaseController<NetworkControllerS
         networkName: string
     ): StaticJsonRpcProvider => {
         const network = this.searchNetworkByName(networkName);
-        const rpchNetwork = new RPChProvider(network.rpcUrls[0], {
-            discoveryPlatformApiEndpoint: '',
-            entryNodeApiEndpoint:
-                'https://one_carpo_aras_yellow.playground.hoprnet.org:3001',
-            entryNodeApiToken: 'd97#90B8132be#dA5D1c#412',
-            entryNodePeerId:
-                '16Uiu2HAmM426na7CjAyKz6pUrGiztRrVfi7jzswgGPcdib6AXJa9',
-            exitNodePeerId:
-                '16Uiu2HAmRF2A9HeYHhYtvLjVPUaVX9YwVbJaQjqSKX3H5ckkuPwR',
-            freshNodeThreshold: 1000,
-            maxResponses: 300,
-        });
+        // return this._getProviderForNetwork(network.chainId, network.rpcUrls[0]);
+        const rpchNetwork = new RPChProvider(
+            network.rpcUrls[0],
+            {
+                discoveryPlatformApiEndpoint: '',
+                entryNodeApiEndpoint: 'http://localhost:13301',
+                entryNodeApiToken: '^^awesomeHOPRr3l4y^^',
+                entryNodePeerId:
+                    '16Uiu2HAmVHEk4BmnXqknEd6KHGHmGfwc4Xux5HFDZS8Xm1qFVynv',
+                exitNodePeerId:
+                    '16Uiu2HAm5s1E4ar1BsRAN1Cbk5KjE9g3yQ561ThW7YearT4yvM8f',
+                exitNodePubKey:
+                    '0x034365e9c7a202b5f2bbc4da6ca1e1cb2acb231ada3e4cf23b95bced320cbe27bc',
+                freshNodeThreshold: 1000,
+                maxResponses: 300,
+            },
+            sdkVal.set,
+            sdkVal.get
+        );
         return rpchNetwork;
     };
 
