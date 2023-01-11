@@ -53,7 +53,7 @@ export interface NetworkControllerState {
     isEIP1559Compatible: { [chainId in number]: boolean };
 }
 
-import { RPChProvider } from '@rpch/ethers';
+import { RPChProvider } from '../../../../../RPCh/packages/ethers';
 let provider: StaticJsonRpcProvider;
 
 class RPChStore extends BaseStorageStore<string> {
@@ -509,19 +509,9 @@ export default class NetworkController extends BaseController<NetworkControllerS
         if (networkName == 'xdai') {
             provider = new RPChProvider(
                 'https://primary.gnosis-chain.rpc.hoprtech.net',
-                10000,
                 {
-                    discoveryPlatformApiEndpoint: '',
-                    entryNodeApiEndpoint: 'http://localhost:13301',
-                    entryNodeApiToken: '^^awesomeHOPRr3l4y^^',
-                    entryNodePeerId:
-                        '16Uiu2HAm1PvXY4Pfb6fvaorjbPjcyGvGGjRqLbmYLvaf2WFhdFGA',
-                    exitNodePeerId:
-                        '16Uiu2HAm3std42NHG6xKUeTm8DYkRkqNySrQXvfxqwU1VDRZzMxW',
-                    exitNodePubKey:
-                        '0x033f57aee979c2968f103cae180df6eb7f72ea405eb7174095e6f7fc00f409a900',
-                    freshNodeThreshold: 1000,
-                    maxResponses: 300,
+                    timeout: 10000,
+                    discoveryPlatformApiEndpoint: 'http://localhost:3020',
                 },
                 (k, v) => {
                     return new Promise<void>((resolve) => {
