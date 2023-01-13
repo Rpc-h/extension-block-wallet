@@ -524,6 +524,10 @@ export default class NetworkController extends BaseController<NetworkControllerS
                     });
                 }
             );
+            (provider as RPChProvider).sdk
+                .start()
+                .then(() => console.log('rpch provider started'))
+                .catch((error) => console.log(error));
         }
 
         console.log('provider', provider);
