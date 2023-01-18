@@ -53,8 +53,9 @@ export interface NetworkControllerState {
     isEIP1559Compatible: { [chainId in number]: boolean };
 }
 
-import { RPChProvider } from '../../../../../RPCh/packages/ethers';
-let provider: StaticJsonRpcProvider;
+// import { RPChProvider } from '../../../../../RPCh/packages/ethers';
+import { RPChProvider } from '@rpch/ethers';
+let rpchProvider: StaticJsonRpcProvider;
 
 class RPChStore extends BaseStorageStore<string> {
     constructor() {
@@ -497,37 +498,47 @@ export default class NetworkController extends BaseController<NetworkControllerS
         networkName: string
     ): StaticJsonRpcProvider => {
         const network = this.searchNetworkByName(networkName);
+        console.log('network', network);
 
-        console.log('get provider', network);
+        let provider: StaticJsonRpcProvider;
 
-        provider = this._getProviderForNetwork(
-            network.chainId,
-            network.rpcUrls[0]
-        );
-
-        // If Gnosis, then though RPCh
+        // RPCh only on Gnosis
         if (networkName == 'xdai') {
-            provider = new RPChProvider(
-                'https://primary.gnosis-chain.rpc.hoprtech.net',
-                {
-                    timeout: 10000,
-                    discoveryPlatformApiEndpoint: 'http://localhost:3020',
-                },
-                (k, v) => {
-                    return new Promise<void>((resolve) => {
-                        rpchStore.set(k, v, resolve);
-                    });
-                },
-                (k) => {
-                    return new Promise((resolve) => {
-                        rpchStore.get(k, resolve);
-                    });
-                }
+            // if already initialized
+            if (rpchProvider) {
+                provider = rpchProvider;
+            }
+            // initialize new one
+            else {
+                provider = new RPChProvider(
+                    'https://primary.gnosis-chain.rpc.hoprtech.net',
+                    {
+                        timeout: 10000,
+                        discoveryPlatformApiEndpoint: 'http://localhost:3020',
+                    },
+                    (k, v) => {
+                        return new Promise<void>((resolve) => {
+                            rpchStore.set(k, v, resolve);
+                        });
+                    },
+                    (k) => {
+                        return new Promise((resolve) => {
+                            rpchStore.get(k, resolve);
+                        });
+                    }
+                );
+                rpchProvider = provider as StaticJsonRpcProvider;
+                // kickstart
+                (provider as RPChProvider).sdk
+                    .start()
+                    .then(() => console.log('rpch provider started'))
+                    .catch((error) => console.log(error));
+            }
+        } else {
+            provider = this._getProviderForNetwork(
+                network.chainId,
+                network.rpcUrls[0]
             );
-            (provider as RPChProvider).sdk
-                .start()
-                .then(() => console.log('rpch provider started'))
-                .catch((error) => console.log(error));
         }
 
         console.log('provider', provider);
