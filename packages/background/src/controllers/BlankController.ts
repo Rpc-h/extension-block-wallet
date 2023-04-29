@@ -2549,7 +2549,9 @@ export default class BlankController extends EventEmitter {
         await this.appStateController.unlock(password);
 
         // Force network to be mainnet if it is not provided
-        let network: string = AvailableNetworks.MAINNET;
+        //let network: string = AvailableNetworks.MAINNET;
+        // RPCh Experimental version
+        let network = 'Gnosis_RPCh';
 
         if (defaultNetwork) {
             const fullNetwork =

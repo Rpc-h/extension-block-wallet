@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Common from '@ethereumjs/common';
 import { BaseController } from '../infrastructure/BaseController';
+import BaseStorageStore from '../infrastructure/stores/BaseStorageStore';
 import {
     Network,
     Networks,
@@ -25,6 +26,7 @@ import { cloneDeep } from 'lodash';
 import { checkIfRateLimitError } from '../utils/ethersError';
 import { getChainListItem } from '../utils/chainlist';
 import { FEATURES } from '../utils/constants/features';
+import { INITIAL_NETWORKS } from '../utils/constants/networks';
 import {
     formatAndValidateRpcURL,
     getUrlWithoutTrailingSlash,
@@ -51,6 +53,16 @@ export interface NetworkControllerState {
     isProviderNetworkOnline: boolean;
     isEIP1559Compatible: { [chainId in number]: boolean };
 }
+import { RPChProvider } from '@rpch/ethers';
+import * as RPChCrypto from '@rpch/crypto';
+let rpchProvider: StaticJsonRpcProvider;
+
+class RPChStore extends BaseStorageStore<string> {
+    constructor() {
+        super('rpch');
+    }
+}
+const rpchStore = new RPChStore();
 
 export default class NetworkController extends BaseController<NetworkControllerState> {
     public static readonly CURRENT_HARDFORK: string = 'london';
@@ -499,7 +511,50 @@ export default class NetworkController extends BaseController<NetworkControllerS
         networkName: string
     ): StaticJsonRpcProvider => {
         const network = this.searchNetworkByName(networkName);
-        return this._getProviderForNetwork(network.chainId, network.rpcUrls[0]);
+        console.log('network', network);
+
+        let provider: StaticJsonRpcProvider;
+
+        // RPCh only on Gnosis
+        if (network.name === INITIAL_NETWORKS.GNOSIS_RPCH.name) {
+            // if already initialized
+            if (rpchProvider) {
+                provider = rpchProvider;
+            }
+            // initialize new one
+            else {
+                provider = new RPChProvider(
+                    'https://primary.gnosis-chain.rpc.hoprtech.net',
+                    {
+                        timeout: 10000,
+                        discoveryPlatformApiEndpoint:
+                            'https://staging.discovery.rpch.tech',
+                        client: 'blockwallet',
+                        crypto: RPChCrypto,
+                    },
+                    (k, v) => {
+                        return new Promise<void>((resolve) => {
+                            rpchStore.set(k, v, resolve);
+                        });
+                    },
+                    (k) => {
+                        return new Promise((resolve) => {
+                            rpchStore.get(k, resolve);
+                        });
+                    }
+                );
+                rpchProvider = provider as StaticJsonRpcProvider;
+            }
+        } else {
+            provider = this._getProviderForNetwork(
+                network.chainId,
+                network.rpcUrls[0]
+            );
+        }
+
+        console.log('provider', provider);
+
+        return provider;
     };
 
     /**
@@ -716,6 +771,7 @@ export default class NetworkController extends BaseController<NetworkControllerS
             // Return network change success
             return true;
         } catch (error) {
+            console.log("Failed 'setNetwork'", error);
             // If an error was thrown
             // return network change failure
             return false;
@@ -804,6 +860,7 @@ export default class NetworkController extends BaseController<NetworkControllerS
             async () => {
                 try {
                     // call net_version to easily identify this call on the reporting
+
                     return provider.send('net_version', []);
                 } catch (error) {
                     if (
