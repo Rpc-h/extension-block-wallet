@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Common from '@ethereumjs/common';
 import { BaseController } from '../infrastructure/BaseController';
-import BaseStorageStore from '../infrastructure/stores/BaseStorageStore';
 import {
     Network,
     Networks,
@@ -22,7 +21,6 @@ import {
 } from '@ethersproject/providers';
 import { ErrorCode } from '@ethersproject/logger';
 import { cloneDeep } from 'lodash';
-
 import { checkIfRateLimitError } from '../utils/ethersError';
 import { getChainListItem } from '../utils/chainlist';
 import { FEATURES } from '../utils/constants/features';
@@ -53,16 +51,10 @@ export interface NetworkControllerState {
     isProviderNetworkOnline: boolean;
     isEIP1559Compatible: { [chainId in number]: boolean };
 }
+import RPChSDK from '@rpch/sdk';
 import { RPChProvider } from '@rpch/ethers';
 import * as RPChCrypto from '@rpch/crypto';
 let rpchProvider: StaticJsonRpcProvider;
-
-class RPChStore extends BaseStorageStore<string> {
-    constructor() {
-        super('rpch');
-    }
-}
-const rpchStore = new RPChStore();
 
 export default class NetworkController extends BaseController<NetworkControllerState> {
     public static readonly CURRENT_HARDFORK: string = 'london';
@@ -523,25 +515,10 @@ export default class NetworkController extends BaseController<NetworkControllerS
             }
             // initialize new one
             else {
+                const sdk = new RPChSDK('blockwallet', RPChCrypto);
                 provider = new RPChProvider(
                     'https://primary.gnosis-chain.rpc.hoprtech.net',
-                    {
-                        timeout: 10000,
-                        discoveryPlatformApiEndpoint:
-                            'https://staging.discovery.rpch.tech',
-                        client: 'blockwallet',
-                        crypto: RPChCrypto,
-                    },
-                    (k, v) => {
-                        return new Promise<void>((resolve) => {
-                            rpchStore.set(k, v, resolve);
-                        });
-                    },
-                    (k) => {
-                        return new Promise((resolve) => {
-                            rpchStore.get(k, resolve);
-                        });
-                    }
+                    sdk
                 );
                 rpchProvider = provider as StaticJsonRpcProvider;
             }
