@@ -625,6 +625,18 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
+"@hoprnet/hopr-sdk@^0.0.1-alpha.12":
+  version "0.0.1-alpha.14"
+  resolved "https://registry.yarnpkg.com/@hoprnet/hopr-sdk/-/hopr-sdk-0.0.1-alpha.14.tgz#bbf6d411f5ebaa97e7f5110ddc95b6fb0f3f1d2d"
+  integrity sha512-7K6zXGQRKT9E+w+OxYLtuhvDC5pN7YZxbZEUb/amFYnggGLjLM9fg0sFTLvTE5mu2LmRqGPNeOr4ZnwZ7l38Tw==
+  dependencies:
+    cross-fetch "^3.1.5"
+    debug "^4.3.4"
+    isomorphic-ws "^5.0.0"
+    rlp "^3.0.0"
+    ws "^8.13.0"
+    zod "^3.21.4"
+
 "@humanwhocodes/config-array@^0.11.6":
   version "0.11.7"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.7.tgz#38aec044c6c828f6ed51d5d7ae3d9b9faf6dbb0f"
@@ -916,12 +928,11 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@rpch/common@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@rpch/common/-/common-0.2.1.tgz#911ef750146931e0a2a55d3051e236538027307c"
-  integrity sha512-9WA72XXvws7JzUWcNP50f1miZ0DKCj+RIpSl8Ok/tGhDVJ74lS+zmTQb/XOrJ9T7kRTdJsj3abIKp8f5da/9nA==
+"@rpch/common@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@rpch/common/-/common-0.4.0.tgz#8e5e1950f46109a85a04de61d80c374c1c68e018"
+  integrity sha512-duJeXAKZVpNaY9d/nFjyXIx+enHXKZG7Ru1W8ta7Zxx1Be8GkIz990qvHo+4RLDInCfRM3nqOB15Gvop4NllWw==
   dependencies:
-    cross-fetch "3.2.0-alpha.2"
     debug "^4.3.4"
     ethers "^5.7.2"
     isomorphic-ws "^5.0.0"
@@ -935,24 +946,24 @@
   resolved "https://registry.yarnpkg.com/@rpch/crypto/-/crypto-0.3.4.tgz#201b8e5f0efc7ffb8d3d06f210f5eebd04d41acd"
   integrity sha512-429mUQce5wbAIEHtg1yd9MyEcj8fqxixoDh0msZnVrynhzgFbkyTEHYjBUsj9XHLsyBnMUgzWZGogim8/cR0jw==
 
-"@rpch/ethers@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@rpch/ethers/-/ethers-0.2.1.tgz#5ae2546b5a4cdd41f0b2b6e5d71da81a48c2987e"
-  integrity sha512-BOV1oZP4LNUtxhv1+Hma/r2i+/z38v1pdHl+E7Oots07lc026ussXwc5nz9lOpanpL7NtIFUN89WOY6pmT9mrQ==
+"@rpch/ethers@0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@rpch/ethers/-/ethers-0.3.4.tgz#2768733894072060b9f011cbf58692ac63190ddd"
+  integrity sha512-v6R++n53zMPr2Wx9W/KWRWyUQGPI5sb2tK5o1oeN5VWRTmAY8AYeRCKfR1kwhVHmcMvDQI/6XnsU+xrH6MUu2A==
   dependencies:
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/providers" "^5.7.2"
-    "@rpch/common" "0.2.1"
-    "@rpch/sdk" "0.2.1"
+    "@rpch/common" "0.4.0"
+    "@rpch/sdk" "0.5.2"
 
-"@rpch/sdk@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@rpch/sdk/-/sdk-0.2.1.tgz#b0df2f7ce3061e64665dec092700c1904fdc3d0e"
-  integrity sha512-T7b3jowgwhyjqXufNazhkcwE+Ae81slGqGfTpvKKBHy5ZHL2EKULt+R1FexsdOte2T9+6av3HU6VIajgT/cTXQ==
+"@rpch/sdk@0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@rpch/sdk/-/sdk-0.5.2.tgz#9f31b7957b57951147f7bec3bb6099089068b06c"
+  integrity sha512-4+jR+TaV1XXMDssyWGA75pRycmBzL+myRn/r9ec60tXOE3BA0hFfINtddhDNqdNfytIvi9tVwTZL4yuUL6qoNg==
   dependencies:
-    "@rpch/common" "0.2.1"
+    "@hoprnet/hopr-sdk" "^0.0.1-alpha.12"
+    "@rpch/common" "0.4.0"
     async-retry "^1.3.3"
-    cross-fetch "3.2.0-alpha.2"
     ethers "^5.7.2"
 
 "@scure/base@~1.1.0":
@@ -2288,13 +2299,6 @@ create-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
-
-cross-fetch@3.2.0-alpha.2:
-  version "3.2.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.2.0-alpha.2.tgz#51b70796f44b68cdc1e86fdc3220c1d17dbb86a8"
-  integrity sha512-drGPjxxGKIsZN52uPUX929wCGLxd6lXkfhUlB8Zso+wWw5LXiJy+3iQQ1iqCB0O0SittVCWk1ZPD07wYvM19pQ==
-  dependencies:
-    node-fetch "2.6.5"
 
 cross-fetch@^3.1.4, cross-fetch@^3.1.5:
   version "3.1.5"
@@ -4370,13 +4374,6 @@ node-addon-api@^3.0.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-3.2.1.tgz#81325e0a2117789c0128dab65e7e38f07ceba161"
   integrity sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==
 
-node-fetch@2.6.5:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.5.tgz#42735537d7f080a7e5f78b6c549b7146be1742fd"
-  integrity sha512-mmlIVHJEu5rnIxgEgez6b9GgWXbkZj5YZ7fx+2r94a2E+Uirsp6HsPTPlomfdHtpt/B0cdKviwkoaM6pyvUOpQ==
-  dependencies:
-    whatwg-url "^5.0.0"
-
 node-fetch@2.6.7, node-fetch@^2.6.1:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
@@ -5069,6 +5066,11 @@ rlp@^2.0.0, rlp@^2.2.3, rlp@^2.2.4:
   integrity sha512-d5gdPmgQ0Z+AklL2NVXr/IoSjNZFfTVvQWzL/AM2AOcSzYP2xjlb0AC8YyCLc41MSNf6P6QVtjgPdmVtzb+4lQ==
   dependencies:
     bn.js "^5.2.0"
+
+rlp@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/rlp/-/rlp-3.0.0.tgz#5a60725ca4314a3a165feecca1836e4f2c1e2343"
+  integrity sha512-PD6U2PGk6Vq2spfgiWZdomLvRGDreBLxi5jv5M8EpRo3pU6VEm31KO+HFxE18Q3vgqfDrQ9pZA3FP95rkijNKw==
 
 run-parallel@^1.1.9:
   version "1.2.0"
@@ -6152,6 +6154,11 @@ ws@^8.11.0:
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.11.0.tgz#6a0d36b8edfd9f96d8b25683db2f8d7de6e8e143"
   integrity sha512-HPG3wQd9sNQoT9xHyNCXoDUa+Xw/VevmY9FoHyQ+g+rrMn4j6FB4np7Z0OhdTgjx6MgQLK7jwSy1YecU1+4Asg==
 
+ws@^8.13.0:
+  version "8.13.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.13.0.tgz#9a9fb92f93cf41512a0735c8f4dd09b8a1211cd0"
+  integrity sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==
+
 xml-name-validator@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-4.0.0.tgz#79a006e2e63149a8600f15430f0a4725d1524835"
@@ -6254,3 +6261,8 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zod@^3.21.4:
+  version "3.22.2"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.2.tgz#3add8c682b7077c05ac6f979fea6998b573e157b"
+  integrity sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==
